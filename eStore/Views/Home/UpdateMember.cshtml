@@ -1,0 +1,19 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BussinessObject.Models.Member;
+
+<h2>Update Member</h2>
+<form method="post" asp-action="UpdateMember" asp-controller="home">
+    Member Id<input type='text' value="@Model.MemberId" disabled/><br/><br/>
+  <input type='hidden' name = "memberId" value="@Model.MemberId"/>
+   Email<input type='text'  value="@Model.Email" disabled/><br/><br/>
+  <input type='hidden'name = "email" value="@Model.Email"/>
+
+    Company name<input type='text' name = "companyName" value="@Model?.CompanyName"/><br/><br/>
+    City<input type='text' name = "city" value="@Model?.City"/><br/><br/>
+    Country<input type='text' name = "country" value="@Model?.Country"/><br/><br/>
+    Password<input type='password' name = "password" value="@Model?.Password"/><br/><br/>
+    <input type="submit" value="Save"/><br/><br/>
+    <span>@ViewBag?.Message</span>
+</form>

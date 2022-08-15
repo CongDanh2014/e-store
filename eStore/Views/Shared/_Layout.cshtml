@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+@using Microsoft.AspNetCore.Http;
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .header{
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            background-color: cornflowerblue;
+            justify-content: space-between;
+        }
+        .navbar{
+            height: 60px;
+            background-color: mediumaquamarine;
+            display: flex;
+            align-items: center;
+            padding-left: 400px;
+        }
+        .nav-item{
+            color: #Fff;
+            font-size: 20px;
+            margin-right: 10px;
+            padding-right: 10px;
+            border-right: 2px solid #fff;
+        }
+
+        .body-side{
+            display: flex;
+            margin-top: 50px;
+        }
+        .side-bar{
+            font-size: 20px;
+            width: 350px;
+            margin-right: 50px;
+        }
+        .main{
+            flex-grow:1;
+        }
+        li{
+            margin-bottom: 15px;
+        }
+        .list{
+            border-bottom: 1px dashed #999;
+        }
+
+        .list a{
+            color: #000;
+        }
+
+        .active{
+            color: orange!important;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p style="font-size: 36px; margin-left: 400px">eStore</p>
+        <div class="navbar">
+            <a class= "nav-item" href="">Home</a>
+            <a class= "nav-item" href="">Shopping</a>
+            <a class= "nav-item" href="">Search</a>
+
+        </div>
+    </div>
+    <div class="body-side">
+        <div class="side-bar">
+            <ul class="list">
+                <li>
+                    <p>Shopping</p>
+                    <ul>
+                        <li>
+                            <a href="/home/products" id="product">Products</a>
+                        </li>
+                        <li>
+                            <a href="/home/search" id="search">Search</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+             <ul  class="list">
+                <li>
+                    <p>Administration</p>
+                    <ul>
+                        <li>
+                            <a href="/home/members" id="members">Members</a>
+                        </li>
+                        <li>
+                            <a href="/home/orders" id="orders">Orders</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="list">
+                <li>
+                    <a asp-controller="account" asp-action="logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+        <div class="main">@RenderBody()</div>
+    </div>
+    <script>
+       
+    const active = document.getElementById(`@ViewBag.Active`);
+    active.classList.add("active")
+    </script>
+</body>
+</html>

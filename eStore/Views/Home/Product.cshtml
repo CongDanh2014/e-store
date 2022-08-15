@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<style>
+    tr th{
+        color: #fff;
+       
+    }
+    .field{
+         background-color: #66cdaa;
+    }
+</style>
+ @{
+     if(@Context.Session.GetString("role")== "admin"){
+    <form method="GET" asp-controller="home" asp-action="CreateProduct">
+        <input type="submit" value="Create Product"/>
+    </form>
+ }
+ }
+<table style="width:100%">
+      <tr class="field">
+    <th>ProductId</th>
+    <th>CategoryId</th>
+    <th>ProductName</th>
+    <th>Weight</th>
+    <th>UnitPrice</th>
+    <th>UnitsInStock</th>
+    <th></th>
+    <th></th>
+  </tr>
+    @{
+        if(ViewBag.Products != null)
+        {
+              foreach(var c in ViewBag.Products)
+        {
+                            <form method="get" asp-action="UpdateProduct" asp-controller ="home" >
+                                 <tr>
+                                <td>@c.ProductId
+                                    <input type="hidden" value="@c.ProductId"/>
+                                </td>
+                                <td>@c.CategoryId
+                                 <input type="hidden" value="@c.CategoryId"/>
+                                </td>
+                                <td>@c.ProductName
+                                 <input type="hidden" value="@c.ProductName"/>
+                                </td>
+                                <td>@c.Weight
+                                 <input type="hidden" value="@c.Weight"/>
+                                </td>
+                                <td>@c.UnitPrice
+                                 <input type="hidden" value="@c.UnitPrice"/>
+                                </td>
+                                <td>@c.UnitsInStock
+                                 <input type="hidden" value="@c.UnitsInStock"/>
+                                </td>
+                                @if(@Context.Session.GetString("role") == "admin"){
+                                <td>
+                                    @Html.ActionLink("Update", "UpdateProduct", "home", new {id = @c.ProductId})
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteProduct", "home", new {id = @c.ProductId})
+
+                                </td>
+                                }
+                            </tr>
+                            </form>
+                   
+        }
+        }
+      
+    }
+
+</table>

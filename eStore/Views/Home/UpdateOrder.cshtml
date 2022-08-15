@@ -1,0 +1,24 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BussinessObject.Models.Order;
+
+
+<h2>Update Order</h2>
+<form method="post" asp-action="UpdateOrder" asp-controller="home">
+    Order Id<input type='text' value="@Model.OrderId" disabled/><br/><br/>
+  <input type='hidden' name = "orderId" value="@Model.OrderId"/>
+    Member Id<input type='text' name = "memberId" value="@Model?.MemberId"/><br/><br/>
+     Required Date<input type='datetime-local' name = "requiredDate" min="2020-01-07T00:00" max="2023-01-14T00:00"/><br/><br/>
+    Shipped Date<input type='datetime-local' name = "shippedDate" value="@Model?.ShippedDate"/><br/><br/>
+    Freight<input type='text' name = "freight" value="@Model?.Freight"/><br/><br/>
+    <input type="submit" value="Save"/><br/><br/>
+    <span>@ViewBag?.Message</span>
+</form>
+
+<script>
+const requiredDate = new Date('@Model.RequiredDate.ToString()').toISOString();
+const shippedDate =new Date('@Model.ShippedDate.ToString()').toISOString();
+document.querySelector('input[name="requiredDate"]').value= requiredDate.slice(0,19)
+document.querySelector('input[name="shippedDate"]').value= shippedDate.slice(0,19)
+</script>

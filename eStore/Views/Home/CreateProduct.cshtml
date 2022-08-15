@@ -1,0 +1,34 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+
+<h2>Create Product</h2>
+<form method="post" asp-action="CreateProduct" asp-controller="home">
+    Product Id<input type='text' name = "productId" value="@ViewBag?.ProductId"/><br/><br/>
+    Category Id <select name="categoryId">
+        @{
+            if(@ViewBag.Categories != null)
+            {
+                foreach(var c in @ViewBag.Categories)
+                {
+                    if(@ViewBag?.CategoryId == c.ToString()){
+                    <option value='@c' selected>@c</option>
+
+                    }
+                    else
+                    {
+                    <option value='@c'>@c</option>
+                        
+                    }
+                }
+            }
+        }
+    </select><br/><br/>
+    ProductName<input type='text' name = "productName" value="@ViewBag?.ProductName"/><br/><br/>
+    Weight<input type='text' name = "weight" value="@ViewBag?.Weight"/><br/><br/>
+    Price<input type='text' name = "unitPrice" value="@ViewBag?.UnitPrice"/><br/><br/>
+    Quantity<input type='text' name = "unitsInStock" value="@ViewBag?.UnitsInstock"/><br/><br/>
+    <input type="submit" value="Save"/><br/><br/>
+    <span>@ViewBag?.Message</span>
+</form>

@@ -1,0 +1,68 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BussinessObject.Models.OrderDetail;
+
+<h2>Update Details</h2>
+<form method="post" asp-action="UpdateOrderDetail" asp-controller="home">
+    Order Id<input type='text' name = "orderId" value="@ViewBag?.OrderId" readonly/><br/><br/>
+    Product Id <select name="productId" readonly id="productID" disabled>
+        @{
+            if(@ViewBag.Products != null)
+            {
+                foreach(var c in @ViewBag.Products)
+                {
+                    if(@Model?.ProductId == c.ProductId){
+                    <option value='@c.ProductId' selected>@c.ProductId</option>
+
+                    }
+                    else
+                    {
+                    <option value='@c.ProductId'>@c.ProductId</option>
+                        
+                    }
+                }
+            }
+        }
+    <input type = "hidden" name="productId" id="a" />
+
+    </select><br/><br/>
+     Product Name <select id="productName" disabled>
+        @{
+            if(@ViewBag.Products != null)
+            {
+                foreach(var c in @ViewBag.Products)
+                {
+                    if(@Model?.Product.ProductName == c.ProductName.ToString()){
+                    <option value='@c.ProductName' selected>@c.ProductName</option>
+
+                    }
+                    else
+                    {
+                    <option value='@c.ProductName'>@c.ProductName</option>
+                        
+                    }
+                }
+            }
+        }
+    </select><br/><br/>
+    Price<input type='text' name = "unitPrice" value="@Model?.UnitPrice"/><br/><br/>
+    Quantity<input type='text' name = "quantity" value="@Model?.Quantity"/><br/><br/>
+    Discount<input type='text' name = "discount" value="@Model?.Discount"/><br/><br/>
+    <input type="submit" value="Save"/><br/><br/>
+    <span>@ViewBag?.Message</span>
+</form>
+<script>
+ var productName = document.getElementById('productName');
+    var a = document.getElementById('a') 
+
+                                    var productID = document.getElementById('productID');
+                                        a.value = productID.options[productName.selectedIndex].value;
+
+                                    productName.addEventListener('change', () => {
+                                        productID.options[productID.selectedIndex].disabled = true;
+                                        productID.options[productName.selectedIndex].disabled = false;
+                                        productID.options[productName.selectedIndex].selected = true;
+                                        a.value = productID.options[productName.selectedIndex].value;
+                                    });
+</script>

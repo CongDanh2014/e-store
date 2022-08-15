@@ -1,0 +1,117 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+}
+
+
+
+<style>
+    .form-search{
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 20px;
+    }
+       tr th{
+        color: #fff;
+       
+    }
+    .field{
+         background-color: #66cdaa;
+    }
+</style>
+<form method="post" asp-action="Search" asp-controller="home" class="form-search">
+Product Name: <input type="text" name="searchProduct" value="@ViewBag.SearchProduct"/>&nbsp;
+Price range: <select name="searchPrice">
+    @{
+            @if(@ViewBag.SearchPrice == "1")
+            {
+                <option value=1 selected>0 - 10000</option>
+
+            }
+            else
+            {
+                 <option value=1 >0 - 10000</option>
+                
+            }
+            @if(@ViewBag.SearchPrice == "2")
+            {
+                    <option value="2" selected>10000 - 20000</option>
+
+
+            }
+            else
+            {
+                     <option value="2">10000 - 20000</option>            
+            }
+              @if(@ViewBag.SearchPrice == "3")
+            {
+                    <option value="3" selected>more 20000</option>
+
+
+            }
+            else
+            {
+                     <option value="3">more 20000</option>        
+            }
+        }
+    
+</select>
+<input type="submit" value="Find" />
+<input type="reset"/>
+</form>
+    @{
+
+        if(ViewBag.Products != null)
+        {
+            <table style="width:100%">
+      <tr class="field">
+    <th>ProductId</th>
+    <th>CategoryId</th>
+    <th>ProductName</th>
+    <th>Weight</th>
+    <th>UnitPrice</th>
+    <th>UnitsInStock</th>
+    <th></th>
+    <th></th>
+  </tr>
+              @foreach(var c in ViewBag.Products)
+        {
+                            <form method="get" asp-action="UpdateProduct" asp-controller ="home" >
+                                 <tr>
+                                <td>@c.ProductId
+                                    <input type="hidden" value="@c.ProductId"/>
+                                </td>
+                                <td>@c.CategoryId
+                                 <input type="hidden" value="@c.CategoryId"/>
+                                </td>
+                                <td>@c.ProductName
+                                 <input type="hidden" value="@c.ProductName"/>
+                                </td>
+                                <td>@c.Weight
+                                 <input type="hidden" value="@c.Weight"/>
+                                </td>
+                                <td>@c.UnitPrice
+                                 <input type="hidden" value="@c.UnitPrice"/>
+                                </td>
+                                <td>@c.UnitsInStock
+                                 <input type="hidden" value="@c.UnitsInStock"/>
+                                </td>
+                                @if(@Context.Session.GetString("role") == "admin"){
+                                <td>
+                                    @Html.ActionLink("Update", "UpdateProduct", "home", new {id = @c.ProductId})
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteProduct", "home", new {id = @c.ProductId})
+
+                                </td>
+                                }
+                            </tr>
+                            </form>
+                   
+        }
+</table>
+        }
+      
+    }

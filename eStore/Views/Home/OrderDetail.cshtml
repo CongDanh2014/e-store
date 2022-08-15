@@ -1,0 +1,86 @@
+﻿@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<style>
+    tr th{
+        color: #fff;
+       
+    }
+    .field{
+         background-color: #66cdaa;
+    }
+</style>
+ @{
+     if(@Context.Session.GetString("role")== "admin"){
+    <form method="GET" asp-controller="home" asp-action="CreateOrderDetail">
+        <input type="hidden" name="orderId" value="@ViewBag.OrderDetails[0].OrderId"/>
+        <input type="submit" value="Create Details"/>
+    </form>
+ }
+ }
+
+<table style="width:100%">
+      <tr class="field">
+    <th>Order ID</th>
+    <th>Product ID</th>
+    <th>Product Name</th>
+    <th>Price</th>
+    <th>Quantity</th>
+    <th>Discount</th>
+    <th>Total</th>
+    <th></th>
+    <th></th>
+  </tr>
+    @{
+        if(ViewBag.OrderDetails != null)
+        {
+            foreach (var c in ViewBag.OrderDetails)
+            {
+                var total = (double)(c.Quantity * c.UnitPrice) - c.Discount;
+            
+            
+                            <form method="get" asp-action="UpdateOrderDetail" asp-controller ="home" >
+                                 <tr>
+                                <td>@c.OrderId
+                                    <input type="hidden" value="@c.OrderId"/>
+                                </td>
+                                <td>@c.ProductId
+                                 <input type="hidden" value="@c.ProductId"/>
+                                </td>
+                                <td>@c.Product?.ProductName
+                                 <input type="hidden" value="@c.Product?.ProductName"/>
+                                </td>
+                                <td>@c.UnitPrice
+                                 <input type="hidden" value="@c.UnitPrice"/>
+                                </td>
+                                <td>@c.Quantity
+                                 <input type="hidden" value="@c.Quantity"/>
+                                </td>
+                                <td>@c.Discount
+                                 <input type="hidden" value="@c.Discount"/>
+                                </td>
+                                 <td>
+                                    @total
+                                </td>
+                                @if(@Context.Session.GetString("role") == "admin"){
+                                <td>
+                                    @Html.ActionLink("Update", "UpdateOrderDetail", "home", new {orderId = @c.OrderId, productId = @c.ProductId})
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteOrderDetail", "home", new  {orderId = @c.OrderId, productId = @c.ProductId})
+
+                                </td>
+                                }
+                            </tr>
+                            </form>
+                   
+        }
+        }
+      
+    }
+
+</table>

@@ -1,0 +1,110 @@
+﻿@using BussinessObject.Models
+@using Microsoft.AspNetCore.Http
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+    tr th{
+        color: #fff;
+       
+    }
+    .field{
+         background-color: #66cdaa;
+    }
+</style>
+ @{
+     if(@Context.Session.GetString("role")== "admin"){
+    <form method="GET" asp-controller="home" asp-action="CreateMember">
+        <input type="submit" value="Create Member"/>
+    </form>
+ }
+ }
+<table style="width:100%">
+      <tr class="field">
+    <th>MemberId</th>
+    <th>Email</th>
+    <th>CompanyName</th>
+    <th>City</th>
+    <th>Country</th>
+    <th></th>
+    <th></th>
+  </tr>
+@{
+    if(Context.Session.GetString("role") == "admin")
+    {
+        if(ViewBag.Members != null)
+        {
+              foreach(var c in ViewBag.Members)
+        {
+                            <form method="get" asp-action="UpdateProduct" asp-controller ="home" >
+                                 <tr>
+                                <td>@c.MemberId
+                                    <input type="hidden" value="@c.MemberId"/>
+                                </td>
+                                <td>@c.Email
+                                 <input type="hidden" value="@c.Email"/>
+                                </td>
+                                <td>@c.CompanyName
+                                 <input type="hidden" value="@c.CompanyName"/>
+                                </td>
+                                <td>@c.City
+                                 <input type="hidden" value="@c.City"/>
+                                </td>
+                                <td>@c.Country
+                                 <input type="hidden" value="@c.Country"/>
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Update", "UpdateMember", "home", new {id = @c.MemberId})
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteMember", "home", new {id = @c.MemberId})
+
+                                </td>
+                                
+                            </tr>
+                    </form>
+
+                }
+            }
+        }
+        else
+        {
+            foreach(var c in ViewBag.Members)
+            {
+                if(c.Email == @Context.Session.GetString("email"))
+                {
+                     <form method="get" asp-action="UpdateProduct" asp-controller ="home" >
+                                 <tr>
+                                <td>@c.MemberId
+                                    <input type="hidden" value="@c.MemberId"/>
+                                </td>
+                                <td>@c.Email
+                                 <input type="hidden" value="@c.Email"/>
+                                </td>
+                                <td>@c.CompanyName
+                                 <input type="hidden" value="@c.CompanyName"/>
+                                </td>
+                                <td>@c.City
+                                 <input type="hidden" value="@c.City"/>
+                                </td>
+                                <td>@c.Country
+                                 <input type="hidden" value="@c.Country"/>
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Update", "UpdateMember", "home", new {id = @c.MemberId})
+                                </td>
+                            </tr>
+                    </form>
+                    break;
+                }
+               
+
+                }
+            }
+        }
+    
+
+
+
+

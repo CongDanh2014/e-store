@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model BussinessObject.Models.Product;
+
+<h2>Update Product</h2>
+<form method="post" asp-action="UpdateProduct" asp-controller="home">
+    Product Id<input type='text' value="@Model.ProductId" disabled/><br/><br/>
+  <input type='hidden' name = "productId" value="@Model.ProductId"/>
+    Category Id <select name="categoryId">
+        @{
+            if(@ViewBag.Categories != null)
+            {
+                foreach(var c in @ViewBag.Categories)
+                {
+                    if(@Model?.CategoryId == c){
+                    <option value='@c' selected>@c</option>
+
+                    }
+                    else
+                    {
+                    <option value='@c'>@c</option>
+                        
+                    }
+                }
+            }
+        }
+    </select><br/><br/>
+    ProductName<input type='text' name = "productName" value="@Model?.ProductName"/><br/><br/>
+    Weight<input type='text' name = "weight" value="@Model?.Weight"/><br/><br/>
+    Price<input type='text' name = "unitPrice" value="@Model?.UnitPrice"/><br/><br/>
+    Quantity<input type='text' name = "unitsInStock" value="@Model?.UnitsInStock"/><br/><br/>
+    <input type="submit" value="Save"/><br/><br/>
+    <span>@ViewBag?.Message</span>
+</form>
